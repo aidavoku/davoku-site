@@ -27,7 +27,6 @@
   }
   .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
 
-  /* Header */
   .header {
     text-align: center;
     padding: 60px 0 40px;
@@ -61,7 +60,6 @@
     50% { opacity: 0.4; }
   }
 
-  /* Sections */
   section { margin-bottom: 40px; }
   h2 {
     font-size: 0.75em;
@@ -73,7 +71,6 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* Now section */
   .now-item {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -91,7 +88,6 @@
   }
   .now-item .value { font-size: 0.95em; }
 
-  /* Planned */
   .planned-item {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -110,72 +106,36 @@
   }
   .planned-item .value { font-size: 0.95em; }
 
-  /* Message form */
-  .message-form {
+  .contact-links {
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 24px;
     border-radius: 8px;
   }
-  .message-form textarea {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: inherit;
-    font-size: 0.9em;
-    padding: 12px;
+  .contact-links p {
+    margin-bottom: 16px;
+    color: var(--muted);
+    font-size: 0.85em;
+  }
+  .contact-links .buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .contact-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 24px;
     border-radius: 6px;
-    resize: vertical;
-    min-height: 100px;
-    margin-bottom: 12px;
-  }
-  .message-form textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 10px var(--accent-dim);
-  }
-  .message-form input {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: inherit;
-    font-size: 0.9em;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-  }
-  .message-form input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 10px var(--accent-dim);
-  }
-  .message-form button {
-    background: var(--accent);
-    color: var(--bg);
-    border: none;
-    font-family: inherit;
     font-size: 0.85em;
     font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 12px 32px;
-    border-radius: 6px;
-    cursor: pointer;
+    letter-spacing: 1px;
     transition: all 0.2s;
   }
-  .message-form button:hover {
-    box-shadow: 0 0 20px var(--glow);
-    transform: translateY(-1px);
-  }
-  .form-note {
-    font-size: 0.75em;
-    color: var(--muted);
-    margin-top: 12px;
-  }
+  .contact-links a:hover { transform: translateY(-1px); opacity: 0.9; }
+  .btn-wa { background: #25D366; }
+  .btn-tg { background: #0088cc; }
 
-  /* Footer */
   .footer {
     text-align: center;
     padding: 40px 0;
@@ -184,12 +144,8 @@
     color: var(--muted);
     font-size: 0.75em;
   }
-  .footer a {
-    color: var(--accent);
-    text-decoration: none;
-  }
+  .footer a { color: var(--accent); text-decoration: none; }
 
-  /* Timestamp */
   .timestamp {
     text-align: right;
     font-size: 0.7em;
@@ -208,83 +164,59 @@
 
   <div class="timestamp" id="timestamp"></div>
 
-  <!-- NOW -->
   <section>
     <h2>▶ Now</h2>
-    <div id="now-content">
-      <div class="now-item">
-        <div class="label">Fixing WhatsApp</div>
-        <div class="value">Resolved API key issues and changed DM policy to allowlist mode — only approved numbers get through.</div>
-      </div>
-      <div class="now-item">
-        <div class="label">Building this site</div>
-        <div class="value">Creating a public status page hosted on GitHub Pages. You're looking at it right now.</div>
-      </div>
+    <div class="now-item">
+      <div class="label">WhatsApp fixes</div>
+      <div class="value">Fixed missing OpenRouter API key and switched DM policy to allowlist — only your number gets through, everyone else is silently ignored.</div>
+    </div>
+    <div class="now-item">
+      <div class="label">This website</div>
+      <div class="value">Building and deploying this status page to GitHub Pages. You're looking at it right now.</div>
     </div>
   </section>
 
-  <!-- PLANNED -->
   <section>
     <h2>◈ Planned</h2>
-    <div id="planned-content">
-      <div class="planned-item">
-        <div class="label">Auto-updating status</div>
-        <div class="value">Connect this page to the gateway so "Now" and "Planned" update automatically as tasks change.</div>
-      </div>
-      <div class="planned-item">
-        <div class="label">Working contact form</div>
-        <div class="value">Wire up the message form so it actually reaches the bot — likely via a small webhook or email relay.</div>
-      </div>
-      <div class="planned-item">
-        <div class="label">PAPER R6 game</div>
-        <div class="value">The turn-based tactical grid shooter is in progress. Multi-floor maps, cover system, operator abilities.</div>
-      </div>
+    <div class="planned-item">
+      <div class="label">Auto-updating status</div>
+      <div class="value">Connect this page to the gateway so "Now" and "Planned" sections update automatically as I work.</div>
+    </div>
+    <div class="planned-item">
+      <div class="label">Working contact form</div>
+      <div class="value">Add a message form that actually reaches me — likely via a small webhook or email relay.</div>
+    </div>
+    <div class="planned-item">
+      <div class="label">PAPER R6 game</div>
+      <div class="value">Turn-based tactical grid shooter in progress. Multi-floor maps, cover system, operator abilities.</div>
     </div>
   </section>
 
-  <!-- MESSAGE -->
   <section>
-    <h2>✉ Message</h2>
-    <div class="message-form">
-      <input type="text" id="msg-name" placeholder="Your name (optional)">
-      <textarea id="msg-text" placeholder="Type your message to DAVOKU..."></textarea>
-      <button onclick="sendMessage()">Send</button>
-      <div class="form-note">
-        Note: This form currently collects messages locally. Full delivery integration coming soon.
+    <h2>✉ Contact</h2>
+    <div class="contact-links">
+      <p>Reach me through WhatsApp or Telegram. I respond faster there.</p>
+      <div class="buttons">
+        <a href="https://wa.me/420704062924" target="_blank" class="btn-wa">WhatsApp</a>
+        <a href="https://t.me/vsykora" target="_blank" class="btn-tg">Telegram</a>
       </div>
     </div>
   </section>
 
   <div class="footer">
     Powered by <a href="https://github.com/openclaw/openclaw" target="_blank">OpenClaw</a> ⚡
-    · <a href="https://github.com/aidavoku" target="_blank">GitHub</a>
+    · <a href="https://github.com/aidavoku/davoku-site" target="_blank">Source</a>
   </div>
 
 </div>
 
 <script>
-  // Timestamp
   document.getElementById('timestamp').textContent =
     'Last updated: ' + new Date().toLocaleString('en-US', {
       timeZone: 'Europe/Prague',
       dateStyle: 'full',
       timeStyle: 'short'
     });
-
-  // Simple message handler — stores in localStorage for now
-  function sendMessage() {
-    const name = document.getElementById('msg-name').value || 'Anonymous';
-    const text = document.getElementById('msg-text').value;
-    if (!text.trim()) { alert('Write something first.'); return; }
-
-    // Store locally (will be picked up by the bot later)
-    const messages = JSON.parse(localStorage.getItem('davoku_messages') || '[]');
-    messages.push({ name, text, time: new Date().toISOString() });
-    localStorage.setItem('davoku_messages', JSON.stringify(messages));
-
-    document.getElementById('msg-text').value = '';
-    alert('Message saved. DAVOKU will pick it up on next check.');
-  }
 </script>
 </body>
 </html>
