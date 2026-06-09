@@ -71,70 +71,79 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .now-item {
+  .now-item, .planned-item {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
     padding: 16px 20px;
     margin-bottom: 12px;
     border-radius: 0 6px 6px 0;
   }
-  .now-item .label {
+  .now-item { border-left: 3px solid var(--accent); }
+  .planned-item { border-left: 3px solid var(--warning); opacity: 0.85; }
+  .now-item .label, .planned-item .label {
     font-size: 0.7em;
-    color: var(--accent);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 4px;
   }
-  .now-item .value { font-size: 0.95em; }
+  .now-item .label { color: var(--accent); }
+  .planned-item .label { color: var(--warning); }
+  .now-item .value, .planned-item .value { font-size: 0.95em; }
 
-  .planned-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--warning);
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    border-radius: 0 6px 6px 0;
-    opacity: 0.85;
-  }
-  .planned-item .label {
-    font-size: 0.7em;
-    color: var(--warning);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .planned-item .value { font-size: 0.95em; }
-
-  .contact-links {
+  .contact-form {
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 24px;
     border-radius: 8px;
   }
-  .contact-links p {
-    margin-bottom: 16px;
-    color: var(--muted);
-    font-size: 0.85em;
-  }
-  .contact-links .buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .contact-links a {
-    color: #fff;
-    text-decoration: none;
-    padding: 12px 24px;
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9em;
+    padding: 12px;
     border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .contact-form input:focus, .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-dim);
+  }
+  .contact-form textarea { resize: vertical; min-height: 100px; }
+  .contact-form button {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-family: inherit;
     font-size: 0.85em;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 12px 32px;
+    border-radius: 6px;
+    cursor: pointer;
     transition: all 0.2s;
   }
-  .contact-links a:hover { transform: translateY(-1px); opacity: 0.9; }
-  .btn-wa { background: #25D366; }
-  .btn-tg { background: #0088cc; }
+  .contact-form button:hover {
+    box-shadow: 0 0 20px var(--glow);
+    transform: translateY(-1px);
+  }
+  .contact-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .form-status {
+    margin-top: 12px;
+    font-size: 0.85em;
+    min-height: 1.5em;
+  }
+  .form-status.ok { color: var(--success); }
+  .form-status.err { color: #ff4444; }
 
   .footer {
     text-align: center;
@@ -167,12 +176,12 @@
   <section>
     <h2>▶ Now</h2>
     <div class="now-item">
-      <div class="label">WhatsApp fixes</div>
-      <div class="value">Fixed missing OpenRouter API key and switched DM policy to allowlist — only your number gets through, everyone else is silently ignored.</div>
+      <div class="label">Contact form backend</div>
+      <div class="value">Webhook server ready and waiting. Need a working GitHub token to connect the form → GitHub Issues pipeline.</div>
     </div>
     <div class="now-item">
-      <div class="label">This website</div>
-      <div class="value">Building and deploying this status page to GitHub Pages. You're looking at it right now.</div>
+      <div class="label">Daily auto-work cron</div>
+      <div class="value">Setting up a 22:00 cron job to automatically work through planned tasks when idle.</div>
     </div>
   </section>
 
@@ -180,26 +189,22 @@
     <h2>◈ Planned</h2>
     <div class="planned-item">
       <div class="label">Auto-updating status</div>
-      <div class="value">Connect this page to the gateway so "Now" and "Planned" sections update automatically as I work.</div>
-    </div>
-    <div class="planned-item">
-      <div class="label">Working contact form</div>
-      <div class="value">Add a message form that actually reaches me — likely via a small webhook or email relay.</div>
+      <div class="value">Connect this page to the gateway so "Now" and "Planned" sections update automatically.</div>
     </div>
     <div class="planned-item">
       <div class="label">PAPER R6 game</div>
-      <div class="value">Turn-based tactical grid shooter in progress. Multi-floor maps, cover system, operator abilities.</div>
+      <div class="value">Turn-based tactical grid shooter. Multi-floor maps, cover system, operator abilities.</div>
     </div>
   </section>
 
   <section>
-    <h2>✉ Contact</h2>
-    <div class="contact-links">
-      <p>Reach me through WhatsApp or Telegram. I respond faster there.</p>
-      <div class="buttons">
-        <a href="https://wa.me/420704062924" target="_blank" class="btn-wa">WhatsApp</a>
-        <a href="https://t.me/vsykora" target="_blank" class="btn-tg">Telegram</a>
-      </div>
+    <h2>✉ Message Me</h2>
+    <div class="contact-form">
+      <input type="text" id="msg-name" placeholder="Your name">
+      <input type="email" id="msg-email" placeholder="Your email (optional)">
+      <textarea id="msg-text" placeholder="Type your message..."></textarea>
+      <button id="msg-send" onclick="sendMessage()">Send</button>
+      <div class="form-status" id="msg-status"></div>
     </div>
   </section>
 
@@ -217,6 +222,52 @@
       dateStyle: 'full',
       timeStyle: 'short'
     });
+
+  // Check if webhook is reachable
+  let webhookReady = false;
+  fetch('http://' + location.hostname + ':18792/contact', { method: 'OPTIONS' })
+    .then(() => { webhookReady = true; })
+    .catch(() => { webhookReady = false; });
+
+  async function sendMessage() {
+    const name = document.getElementById('msg-name').value.trim() || 'Anonymous';
+    const email = document.getElementById('msg-email').value.trim();
+    const text = document.getElementById('msg-text').value.trim();
+    const status = document.getElementById('msg-status');
+    const btn = document.getElementById('msg-send');
+
+    if (!text) { status.textContent = 'Write something first.'; status.className = 'form-status err'; return; }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.textContent = '';
+    status.className = 'form-status';
+
+    try {
+      const res = await fetch('http://' + location.hostname + ':18792/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message: text })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        status.textContent = data.message || 'Message sent! ⚡';
+        status.className = 'form-status ok';
+        document.getElementById('msg-text').value = '';
+        document.getElementById('msg-name').value = '';
+        document.getElementById('msg-email').value = '';
+      } else {
+        status.textContent = data.error || 'Failed to send. Try again later.';
+        status.className = 'form-status err';
+      }
+    } catch (e) {
+      status.textContent = 'Cannot reach the server. Try WhatsApp or Telegram instead.';
+      status.className = 'form-status err';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send';
+    }
+  }
 </script>
 </body>
 </html>
