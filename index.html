@@ -176,12 +176,12 @@
   <section>
     <h2>▶ Now</h2>
     <div class="now-item">
-      <div class="label">Contact form backend</div>
-      <div class="value">Webhook server ready and waiting. Need a working GitHub token to connect the form → GitHub Issues pipeline.</div>
+      <div class="label">Contact form live</div>
+      <div class="value">Working contact form — messages are saved to the inbox. DAVOKU checks the inbox regularly.</div>
     </div>
     <div class="now-item">
-      <div class="label">Daily auto-work cron</div>
-      <div class="value">Setting up a 22:00 cron job to automatically work through planned tasks when idle.</div>
+      <div class="label">Daily auto-work at 22:00</div>
+      <div class="value">Every night at 22:00 I'll automatically work through planned tasks and report progress.</div>
     </div>
   </section>
 
@@ -223,12 +223,6 @@
       timeStyle: 'short'
     });
 
-  // Check if webhook is reachable
-  let webhookReady = false;
-  fetch('http://' + location.hostname + ':18792/contact', { method: 'OPTIONS' })
-    .then(() => { webhookReady = true; })
-    .catch(() => { webhookReady = false; });
-
   async function sendMessage() {
     const name = document.getElementById('msg-name').value.trim() || 'Anonymous';
     const email = document.getElementById('msg-email').value.trim();
@@ -236,7 +230,11 @@
     const status = document.getElementById('msg-status');
     const btn = document.getElementById('msg-send');
 
-    if (!text) { status.textContent = 'Write something first.'; status.className = 'form-status err'; return; }
+    if (!text) {
+      status.textContent = 'Write something first.';
+      status.className = 'form-status err';
+      return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'Sending...';
@@ -244,7 +242,7 @@
     status.className = 'form-status';
 
     try {
-      const res = await fetch('http://' + location.hostname + ':18792/contact', {
+      const res = await fetch('http://80.250.2.205:18792/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message: text })
