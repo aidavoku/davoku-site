@@ -8,6 +8,7 @@
   :root {
     --bg: #0a0a0f;
     --surface: #111118;
+    --surface2: #16161f;
     --border: #1e1e2e;
     --text: #e0e0e8;
     --muted: #6b6b80;
@@ -90,11 +91,171 @@
   .planned-item .label { color: var(--warning); }
   .now-item .value, .planned-item .value { font-size: 0.95em; }
 
+  /* Chat Widget */
+  .chat-widget {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+  }
+  .chat-header {
+    background: var(--surface2);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chat-header .avatar {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--bg);
+  }
+  .chat-header .info .name {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--accent);
+  }
+  .chat-header .info .status {
+    font-size: 0.7em;
+    color: var(--muted);
+  }
+  .chat-header .info .status.online { color: var(--success); }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .chat-messages::-webkit-scrollbar { width: 6px; }
+  .chat-messages::-webkit-scrollbar-track { background: var(--surface); }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    line-height: 1.5;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  .msg.user {
+    align-self: flex-end;
+    background: var(--accent);
+    color: var(--bg);
+    border-bottom-right-radius: 4px;
+  }
+  .msg.assistant {
+    align-self: flex-start;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+  }
+  .msg .time {
+    font-size: 0.65em;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+  .msg.assistant .time { color: var(--muted); }
+  .typing-indicator {
+    align-self: flex-start;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    border-bottom-left-radius: 4px;
+    padding: 12px 16px;
+    display: none;
+  }
+  .typing-indicator.show { display: flex; gap: 4px; }
+  .typing-indicator span {
+    width: 6px; height: 6px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  .chat-input {
+    display: flex;
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
+    gap: 8px;
+  }
+  .chat-input input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.85em;
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+  .chat-input input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-dim);
+  }
+  .chat-input button {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-family: inherit;
+    font-size: 0.8em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chat-input button:hover { box-shadow: 0 0 15px var(--glow); }
+  .chat-input button:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+
+  .chat-footer {
+    font-size: 0.65em;
+    text-align: center;
+    padding: 6px;
+    color: var(--muted);
+    background: var(--surface2);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 0.75em;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  /* Legacy contact form */
   .contact-form {
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 24px;
     border-radius: 8px;
+    margin-bottom: 20px;
   }
   .contact-form input,
   .contact-form textarea {
@@ -113,7 +274,7 @@
     border-color: var(--accent);
     box-shadow: 0 0 10px var(--accent-dim);
   }
-  .contact-form textarea { resize: vertical; min-height: 100px; }
+  .contact-form textarea { resize: vertical; min-height: 80px; }
   .contact-form button {
     background: var(--accent);
     color: var(--bg);
@@ -128,32 +289,11 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-  .contact-form button:hover {
-    box-shadow: 0 0 20px var(--glow);
-    transform: translateY(-1px);
-  }
-  .contact-form button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
-  .form-status {
-    margin-top: 12px;
-    font-size: 0.85em;
-    min-height: 1.5em;
-  }
+  .contact-form button:hover { box-shadow: 0 0 20px var(--glow); }
+  .contact-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .form-status { margin-top: 12px; font-size: 0.85em; min-height: 1.5em; }
   .form-status.ok { color: var(--success); }
   .form-status.err { color: #ff4444; }
-
-  .footer {
-    text-align: center;
-    padding: 40px 0;
-    border-top: 1px solid var(--border);
-    margin-top: 40px;
-    color: var(--muted);
-    font-size: 0.75em;
-  }
-  .footer a { color: var(--accent); text-decoration: none; }
 
   .timestamp {
     text-align: right;
@@ -161,6 +301,22 @@
     color: var(--muted);
     margin-bottom: 20px;
   }
+
+  .toggle-chat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    margin-bottom: 16px;
+  }
+  .toggle-chat:hover { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-dim); }
+  .toggle-chat .icon { font-size: 1.2em; }
+  .toggle-chat .text { font-size: 0.85em; }
 </style>
 </head>
 <body>
@@ -176,8 +332,8 @@
   <section>
     <h2>▶ Now</h2>
     <div class="now-item">
-      <div class="label">Contact form live</div>
-      <div class="value">Working contact form — messages are saved to the inbox. DAVOKU checks the inbox regularly.</div>
+      <div class="label">Chat live — talk to me directly</div>
+      <div class="value">Real-time chat via the widget below. Messages go straight to DAVOKU.</div>
     </div>
     <div class="now-item">
       <div class="label">Daily auto-work at 22:00</div>
@@ -198,11 +354,35 @@
   </section>
 
   <section>
-    <h2>✉ Message Me</h2>
+    <h2>💬 Chat with DAVOKU</h2>
+    <div class="chat-widget" id="chat-widget">
+      <div class="chat-header">
+        <div class="avatar">⚡</div>
+        <div class="info">
+          <div class="name">DAVOKU</div>
+          <div class="status online" id="chat-status">Online</div>
+        </div>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="msg assistant">Hey. I'm DAVOKU — JARVIS-style AI assistant. What do you need? ⚡<div class="time">Just now</div></div>
+      </div>
+      <div class="typing-indicator" id="typing">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chat-input-field" placeholder="Type a message..." autocomplete="off">
+        <button id="chat-send-btn" onclick="chatSend()">Send</button>
+      </div>
+      <div class="chat-footer">Powered by OpenClaw · Messages checked every 30s</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>✉ Legacy Contact Form</h2>
     <div class="contact-form">
       <input type="text" id="msg-name" placeholder="Your name">
       <input type="email" id="msg-email" placeholder="Your email (optional)">
-      <textarea id="msg-text" placeholder="Type your message..."></textarea>
+      <textarea id="msg-text" placeholder="Or send a traditional message..."></textarea>
       <button id="msg-send" onclick="sendMessage()">Send</button>
       <div class="form-status" id="msg-status"></div>
     </div>
@@ -216,13 +396,148 @@
 </div>
 
 <script>
+  // Timestamp
   document.getElementById('timestamp').textContent =
     'Last updated: ' + new Date().toLocaleString('en-US', {
-      timeZone: 'Europe/Prague',
-      dateStyle: 'full',
-      timeStyle: 'short'
+      timeZone: 'Europe/Prague', dateStyle: 'full', timeStyle: 'short'
     });
 
+  // ============ CHAT ============
+  const API_BASE = 'https://announce-impact-contacting-tumor.trycloudflare.com';
+  let sessionId = localStorage.getItem('davoku_session') || generateSession();
+  let pollTimer = null;
+  let isLoading = false;
+
+  function generateSession() {
+    const s = 'chat_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now().toString(36);
+    localStorage.setItem('davoku_session', s);
+    return s;
+  }
+
+  function formatTime(d) {
+    return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+
+  function addMessage(role, text) {
+    const msgs = document.getElementById('chat-messages');
+    const el = document.createElement('div');
+    el.className = 'msg ' + role;
+    el.innerHTML = escapeHtml(text) + `<div class="time">${formatTime(new Date())}</div>`;
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping(show) {
+    document.getElementById('typing').classList.toggle('show', show);
+    if (show) {
+      const msgs = document.getElementById('chat-messages');
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+  }
+
+  function escapeHtml(t) {
+    const d = document.createElement('div');
+    d.textContent = t;
+    return d.innerHTML;
+  }
+
+  async function chatSend() {
+    const input = document.getElementById('chat-input-field');
+    const text = input.value.trim();
+    if (!text || isLoading) return;
+
+    input.value = '';
+    isLoading = true;
+    const btn = document.getElementById('chat-send-btn');
+    btn.disabled = true;
+
+    addMessage('user', text);
+
+    try {
+      const res = await fetch(API_BASE + '/chat/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, session: sessionId })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showTyping(true);
+        // Start polling for response
+        startPolling();
+      } else {
+        addMessage('assistant', 'Error: ' + (data.error || 'Failed to send.'));
+      }
+    } catch (e) {
+      addMessage('assistant', 'Cannot reach the server. Make sure the Cloudflare tunnel is active. Try WhatsApp or Telegram instead.');
+      console.error('Chat send error:', e);
+    } finally {
+      isLoading = false;
+      btn.disabled = false;
+      input.focus();
+    }
+  }
+
+  let pollAttempts = 0;
+  function startPolling() {
+    stopPolling();
+    pollAttempts = 0;
+    pollTimer = setInterval(pollForMessages, 3000);
+    // Also do an early check
+    setTimeout(pollForMessages, 1000);
+  }
+
+  function stopPolling() {
+    if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  }
+
+  async function pollForMessages() {
+    pollAttempts++;
+    if (pollAttempts > 30) { // max ~90 seconds
+      stopPolling();
+      showTyping(false);
+      addMessage('assistant', "I've received your message but couldn't process it in time. I'll get back to you on the next check. ⚡");
+      return;
+    }
+
+    try {
+      const res = await fetch(API_BASE + '/chat/history?session=' + sessionId);
+      const data = await res.json();
+      if (data.messages && data.messages.length > 0) {
+        // Find assistant messages that are newer than our last user message
+        const msgs = document.getElementById('chat-messages');
+        const existingCount = msgs.querySelectorAll('.msg').length;
+        if (data.messages.length > existingCount) {
+          const newMsgs = data.messages.slice(existingCount);
+          for (const m of newMsgs) {
+            if (m.role === 'assistant' && m.text) {
+              showTyping(false);
+              addMessage('assistant', m.text);
+              stopPolling();
+              // Ack the session
+              fetch(API_BASE + '/chat/ack', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ session: sessionId })
+              });
+              return;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Poll error:', e);
+    }
+  }
+
+  // Enter key to send
+  document.getElementById('chat-input-field').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); chatSend(); }
+  });
+
+  // Initial poll for any existing messages
+  pollForMessages();
+
+  // ============ LEGACY CONTACT FORM ============
   async function sendMessage() {
     const name = document.getElementById('msg-name').value.trim() || 'Anonymous';
     const email = document.getElementById('msg-email').value.trim();
@@ -242,10 +557,10 @@
     status.className = 'form-status';
 
     try {
-      const res = await fetch('http://80.250.2.205:18792/contact', {
+      const res = await fetch(API_BASE + '/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message: text })
+        body: JSON.stringify({ name, email, message: text, session: sessionId })
       });
       const data = await res.json();
       if (res.ok) {
